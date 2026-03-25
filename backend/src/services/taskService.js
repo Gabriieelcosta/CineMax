@@ -6,17 +6,9 @@ async function getAll(_userId, filters) {
   return taskRepository.findAll(filters)
 }
 
-async function getById(userId, taskId) {
+async function getById(_userId, taskId) {
   const task = await taskRepository.findById(taskId)
   if (!task) throw new NotFoundError('Tarefa não encontrada')
-
-  const isMember =
-    task.ownerId === userId ||
-    task.assigneeId === userId ||
-    task.collaborators.some((c) => c.userId === userId)
-
-  if (!isMember) throw new ForbiddenError('Acesso negado')
-
   return task
 }
 
