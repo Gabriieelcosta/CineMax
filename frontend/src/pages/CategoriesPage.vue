@@ -17,9 +17,37 @@
               <v-icon :color="cat.color || 'primary'">mdi-tag</v-icon>
             </template>
             <v-card-title>{{ cat.name }}</v-card-title>
+            <v-card-subtitle v-if="cat.userId !== authStore.user?.id" class="text-caption">
+              Criada por outro usuário
+            </v-card-subtitle>
             <template #append>
-              <v-btn icon="mdi-pencil" variant="text" size="small" @click="openForm(cat)" />
-              <v-btn icon="mdi-delete" variant="text" size="small" color="error" @click="confirmDelete(cat)" />
+              <v-tooltip text="Apenas o criador pode editar" :disabled="cat.userId === authStore.user?.id">
+                <template #activator="{ props }">
+                  <span v-bind="props">
+                    <v-btn
+                      icon="mdi-pencil"
+                      variant="text"
+                      size="small"
+                      :disabled="cat.userId !== authStore.user?.id"
+                      @click="openForm(cat)"
+                    />
+                  </span>
+                </template>
+              </v-tooltip>
+              <v-tooltip text="Apenas o criador pode excluir" :disabled="cat.userId === authStore.user?.id">
+                <template #activator="{ props }">
+                  <span v-bind="props">
+                    <v-btn
+                      icon="mdi-delete"
+                      variant="text"
+                      size="small"
+                      color="error"
+                      :disabled="cat.userId !== authStore.user?.id"
+                      @click="confirmDelete(cat)"
+                    />
+                  </span>
+                </template>
+              </v-tooltip>
             </template>
           </v-card-item>
         </v-card>
@@ -80,10 +108,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useCategoryStore } from '@/stores/categories'
+import { useAuthStore } from '@/stores/auth'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
 import ConfirmDialog from '@/components/ui/ConfirmDialog.vue'
 
 const categoryStore = useCategoryStore()
+const authStore = useAuthStore()
 
 const showForm = ref(false)
 const showConfirm = ref(false)
@@ -92,7 +122,6 @@ const deleteLoading = ref(false)
 const editingCat = ref(null)
 const deletingCat = ref(null)
 const form = ref({ name: '', color: '#E50914' })
-
 
 const loading = computed(() => categoryStore.loading)
 const categories = computed(() => categoryStore.categories)
