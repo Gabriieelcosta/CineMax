@@ -1,7 +1,7 @@
 const categoryService = require('../services/categoryService')
 
 async function getAll(request, reply) {
-  const categories = await categoryService.getAll(request.user.id)
+  const categories = await categoryService.getAll()
   return reply.send(categories)
 }
 

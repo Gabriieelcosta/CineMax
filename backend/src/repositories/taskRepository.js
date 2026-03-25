@@ -1,13 +1,8 @@
 const prisma = require('../config/database')
 
-async function findAll({ userId, status, priority, categoryId }) {
+async function findAll({ status, priority, categoryId }) {
   return prisma.task.findMany({
     where: {
-      OR: [
-        { ownerId: userId },
-        { assigneeId: userId },
-        { collaborators: { some: { userId } } },
-      ],
       ...(status && { status }),
       ...(priority && { priority }),
       ...(categoryId && { categoryId }),

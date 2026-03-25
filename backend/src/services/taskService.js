@@ -2,8 +2,8 @@ const taskRepository = require('../repositories/taskRepository')
 const { NotFoundError, ForbiddenError } = require('../utils/errors')
 const sseService = require('./sseService')
 
-async function getAll(userId, filters) {
-  return taskRepository.findAll({ userId, ...filters })
+async function getAll(_userId, filters) {
+  return taskRepository.findAll(filters)
 }
 
 async function getById(userId, taskId) {

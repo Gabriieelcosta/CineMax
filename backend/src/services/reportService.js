@@ -1,8 +1,8 @@
 const reportRepository = require('../repositories/reportRepository')
 
-async function getSummary(userId) {
+async function getSummary() {
   const { totalTasks, byStatus, byPriority, byCategory, overdue } =
-    await reportRepository.getSummary(userId)
+    await reportRepository.getSummary()
 
   // Formata os dados para o frontend consumir facilmente
   return {

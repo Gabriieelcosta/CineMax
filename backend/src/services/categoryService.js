@@ -1,8 +1,8 @@
 const categoryRepository = require('../repositories/categoryRepository')
 const { NotFoundError, ForbiddenError } = require('../utils/errors')
 
-async function getAll(userId) {
-  return categoryRepository.findAll(userId)
+async function getAll() {
+  return categoryRepository.findAll()
 }
 
 async function create(userId, { name, color }) {

@@ -1,8 +1,7 @@
 const prisma = require('../config/database')
 
-async function findAll(userId) {
+async function findAll() {
   return prisma.category.findMany({
-    where: { userId },
     orderBy: { createdAt: 'desc' },
   })
 }
