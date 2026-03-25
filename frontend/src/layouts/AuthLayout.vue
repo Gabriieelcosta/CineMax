@@ -9,10 +9,10 @@
             <div class="text-center mb-8">
               <v-icon size="56" color="primary">mdi-movie-play</v-icon>
               <h1 class="text-h4 font-weight-bold mt-2 text-white">
-                CINEMAX
+                CLAQUETE
               </h1>
               <p class="text-caption text-medium-emphasis mt-1">
-                Gestão de tarefas para quem move o entretenimento
+                Gestão de tarefas para quem produz entretenimento
               </p>
             </div>
 

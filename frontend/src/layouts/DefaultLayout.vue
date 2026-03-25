@@ -7,18 +7,10 @@
       <!-- Logo -->
       <v-list-item
         prepend-icon="mdi-movie-play"
-        title="CINEMAX"
+        title="CLAQUETE"
         nav
         class="py-4"
-      >
-        <template #append>
-          <v-btn
-            :icon="rail ? 'mdi-chevron-right' : 'mdi-chevron-left'"
-            variant="text"
-            @click="rail = !rail"
-          />
-        </template>
-      </v-list-item>
+      />
 
       <v-divider />
 
@@ -63,6 +55,14 @@
 
     <!-- HEADER -->
     <v-app-bar color="surface" elevation="0" border="b">
+      <!-- Botão de toggle da sidebar — sempre visível no header -->
+      <v-btn
+        :icon="rail ? 'mdi-menu' : 'mdi-menu-open'"
+        variant="text"
+        class="ml-1"
+        @click="rail = !rail"
+      />
+
       <v-app-bar-title>
         <span class="text-medium-emphasis text-body-2">{{ currentPageTitle }}</span>
       </v-app-bar-title>
@@ -116,7 +116,7 @@ const navItems = [
 // Título da página atual baseado na rota
 const currentPageTitle = computed(() => {
   const item = navItems.find((i) => route.path.startsWith(i.to))
-  return item?.title || 'Cinemax'
+  return item?.title || 'Claquete'
 })
 
 // Avatar gerado a partir das iniciais do nome
