@@ -12,8 +12,10 @@ async function buildApp() {
   await fastify.register(require('@fastify/swagger-ui'), swaggerUiConfig)
 
   // CORS — permite o frontend chamar a API
+  // Suporta múltiplas origens separadas por vírgula (ex: dev local + Docker)
+  const corsOrigins = (process.env.CORS_ORIGIN || '*').split(',').map((o) => o.trim())
   await fastify.register(require('@fastify/cors'), {
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: corsOrigins.length === 1 ? corsOrigins[0] : corsOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
 

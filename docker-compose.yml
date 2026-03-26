@@ -12,7 +12,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U cinemax']
+      test: ['CMD-SHELL', 'pg_isready -U cinemax -d cinemax_db']
       interval: 10s
       timeout: 5s
       retries: 5
@@ -25,6 +25,8 @@ services:
     restart: unless-stopped
     env_file:
       - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql://cinemax:cinemax123@postgres:5432/cinemax_db
     ports:
       - '3000:3000'
     depends_on:
@@ -33,6 +35,17 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cinemax_frontend
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
