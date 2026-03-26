@@ -103,10 +103,13 @@
       </v-card-item>
       <v-card-text>
         O chip no canto superior direito indica a conexão em tempo real (SSE — Server-Sent Events).
-        Quando <v-chip size="x-small" color="success" variant="tonal" class="mx-1"><v-icon start size="8">mdi-circle</v-icon>Ao vivo</v-chip>
-        está ativo, o sistema recebe atualizações automáticas sem precisar recarregar a página.
-        Se aparecer <v-chip size="x-small" color="error" variant="tonal" class="mx-1"><v-icon start size="8">mdi-circle</v-icon>Offline</v-chip>,
-        recarregue a página para reconectar.
+        Enquanto a aba estiver aberta, o status
+        <v-chip size="x-small" color="success" variant="tonal" class="mx-1"><v-icon start size="8">mdi-circle</v-icon>Ao vivo</v-chip>
+        permanece ativo e o sistema recebe atualizações automáticas sem precisar recarregar a página —
+        novas tarefas e categorias criadas por outros usuários aparecem instantaneamente.
+        O status <v-chip size="x-small" color="error" variant="tonal" class="mx-1"><v-icon start size="8">mdi-circle</v-icon>Offline</v-chip>
+        só ocorre se o servidor for reiniciado ou a conexão de rede cair; nesse caso o sistema
+        reconecta automaticamente em 5 segundos.
       </v-card-text>
     </v-card>
   </div>
