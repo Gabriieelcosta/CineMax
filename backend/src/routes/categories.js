@@ -8,6 +8,21 @@ async function categoryRoutes(fastify) {
       tags: ['Categories'],
       summary: 'Listar categorias do usuário',
       security: [{ bearerAuth: [] }],
+      response: {
+        200: {
+          description: 'Lista de categorias',
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              name: { type: 'string' },
+              color: { type: 'string' },
+            },
+          },
+        },
+        401: { description: 'Nao autorizado' },
+      },
     },
   }, getAll)
 
@@ -24,6 +39,18 @@ async function categoryRoutes(fastify) {
           name: { type: 'string', minLength: 1 },
           color: { type: 'string', default: '#6366f1' },
         },
+      },
+      response: {
+        201: {
+          description: 'Categoria criada com sucesso',
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            name: { type: 'string' },
+            color: { type: 'string' },
+          },
+        },
+        401: { description: 'Nao autorizado' },
       },
     },
   }, create)
@@ -45,6 +72,20 @@ async function categoryRoutes(fastify) {
           color: { type: 'string' },
         },
       },
+      response: {
+        200: {
+          description: 'Categoria atualizada com sucesso',
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            name: { type: 'string' },
+            color: { type: 'string' },
+          },
+        },
+        401: { description: 'Nao autorizado' },
+        403: { description: 'Somente o criador pode editar' },
+        404: { description: 'Categoria nao encontrada' },
+      },
     },
   }, update)
 
@@ -57,6 +98,12 @@ async function categoryRoutes(fastify) {
       params: {
         type: 'object',
         properties: { id: { type: 'string' } },
+      },
+      response: {
+        204: { description: 'Categoria excluida com sucesso' },
+        401: { description: 'Nao autorizado' },
+        403: { description: 'Somente o criador pode excluir' },
+        404: { description: 'Categoria nao encontrada' },
       },
     },
   }, remove)

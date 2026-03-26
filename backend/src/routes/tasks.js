@@ -17,6 +17,26 @@ async function taskRoutes(fastify) {
         },
       },
     },
+      response: {
+        200: {
+          description: 'Lista de tarefas',
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              title: { type: 'string' },
+              description: { type: 'string' },
+              status: { type: 'string' },
+              priority: { type: 'string' },
+              dueDate: { type: 'string', format: 'date-time' },
+              createdAt: { type: 'string', format: 'date-time' },
+            },
+          },
+        },
+        401: { description: 'Nao autorizado' },
+      },
+    },
   }, getAll)
 
   fastify.get('/tasks/:id', {
@@ -28,6 +48,24 @@ async function taskRoutes(fastify) {
       params: {
         type: 'object',
         properties: { id: { type: 'string' } },
+      },
+      response: {
+        200: {
+          description: 'Detalhes da tarefa',
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            title: { type: 'string' },
+            description: { type: 'string' },
+            status: { type: 'string' },
+            priority: { type: 'string' },
+            dueDate: { type: 'string', format: 'date-time' },
+            createdAt: { type: 'string', format: 'date-time' },
+          },
+        },
+        401: { description: 'Nao autorizado' },
+        403: { description: 'Sem permissao' },
+        404: { description: 'Tarefa nao encontrada' },
       },
     },
   }, getById)
@@ -50,6 +88,20 @@ async function taskRoutes(fastify) {
           categoryId: { type: 'string' },
           assigneeId: { type: 'string' },
         },
+      },
+      response: {
+        201: {
+          description: 'Tarefa criada com sucesso',
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            title: { type: 'string' },
+            status: { type: 'string' },
+            priority: { type: 'string' },
+            createdAt: { type: 'string', format: 'date-time' },
+          },
+        },
+        401: { description: 'Nao autorizado' },
       },
     },
   }, create)
@@ -76,6 +128,21 @@ async function taskRoutes(fastify) {
           assigneeId: { type: 'string' },
         },
       },
+      response: {
+        200: {
+          description: 'Tarefa atualizada com sucesso',
+          type: 'object',
+          properties: {
+            id: { type: 'string' },
+            title: { type: 'string' },
+            status: { type: 'string' },
+            priority: { type: 'string' },
+          },
+        },
+        401: { description: 'Nao autorizado' },
+        403: { description: 'Somente o criador pode editar' },
+        404: { description: 'Tarefa nao encontrada' },
+      },
     },
   }, update)
 
@@ -88,6 +155,12 @@ async function taskRoutes(fastify) {
       params: {
         type: 'object',
         properties: { id: { type: 'string' } },
+      },
+      response: {
+        204: { description: 'Tarefa excluida com sucesso' },
+        401: { description: 'Nao autorizado' },
+        403: { description: 'Somente o criador pode excluir' },
+        404: { description: 'Tarefa nao encontrada' },
       },
     },
   }, remove)

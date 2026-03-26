@@ -1,9 +1,9 @@
 const swaggerConfig = {
   openapi: {
     info: {
-      title: 'Cinemax API',
+      title: 'TaskFlow API',
       description: `
-## Cinemax — Gerenciamento de Tarefas em Tempo Real
+## TaskFlow — Gerenciamento de Tarefas em Tempo Real
 
 API RESTful para gerenciamento de tarefas com suporte a colaboração entre usuários
 e transmissão de eventos em tempo real via **SSE (Server-Sent Events)**.
@@ -18,7 +18,7 @@ em tempo real sempre que tarefas forem criadas, atualizadas ou deletadas.
       `.trim(),
       version: '1.0.0',
       contact: {
-        name: 'Cinemax API',
+        name: 'TaskFlow API',
       },
     },
     tags: [
