@@ -20,7 +20,7 @@
       </template>
     </v-card-item>
 
-    <v-card-text class="pt-0">
+    <v-card-text class="pt-0 flex-grow-1">
       <!-- Descrição -->
       <p v-if="task.description" class="text-body-2 text-medium-emphasis mb-3 text-truncate">
         {{ task.description }}

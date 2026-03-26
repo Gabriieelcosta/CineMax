@@ -14,7 +14,7 @@
     <LoadingSpinner v-if="loading" text="Carregando tarefas..." />
 
     <!-- Lista de tarefas -->
-    <v-row v-else-if="filteredTasks.length">
+    <v-row v-else-if="filteredTasks.length" align="stretch">
       <v-col v-for="task in filteredTasks" :key="task.id" cols="12" md="6" lg="4">
         <TaskCard :task="task" @click="openTask" />
       </v-col>

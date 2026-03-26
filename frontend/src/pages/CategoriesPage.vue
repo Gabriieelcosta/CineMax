@@ -9,9 +9,9 @@
 
     <LoadingSpinner v-if="loading" text="Carregando categorias..." />
 
-    <v-row v-else-if="categories.length">
+    <v-row v-else-if="categories.length" align="stretch">
       <v-col v-for="cat in categories" :key="cat.id" cols="12" sm="6" md="4">
-        <v-card>
+        <v-card height="100%">
           <v-card-item>
             <template #prepend>
               <v-icon :color="cat.color || 'primary'">mdi-tag</v-icon>
