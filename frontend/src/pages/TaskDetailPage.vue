@@ -14,9 +14,20 @@
           <v-card-text class="pa-6" v-if="!editing">
             <div class="d-flex align-center justify-space-between mb-4">
               <TaskStatusChip :status="task.status" />
-              <v-btn variant="text" prepend-icon="mdi-pencil" @click="editing = true">
-                Editar
-              </v-btn>
+              <v-tooltip text="Apenas o criador pode editar" :disabled="isOwner">
+                <template #activator="{ props }">
+                  <span v-bind="props">
+                    <v-btn
+                      variant="text"
+                      prepend-icon="mdi-pencil"
+                      :disabled="!isOwner"
+                      @click="editing = true"
+                    >
+                      Editar
+                    </v-btn>
+                  </span>
+                </template>
+              </v-tooltip>
             </div>
             <h2 class="text-h6 font-weight-bold mb-2">{{ task.title }}</h2>
             <p class="text-medium-emphasis">{{ task.description || 'Sem descrição.' }}</p>
@@ -60,6 +71,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTaskStore } from '@/stores/tasks'
 import { useCategoryStore } from '@/stores/categories'
+import { useAuthStore } from '@/stores/auth'
 import userService from '@/services/userService'
 import TaskStatusChip from '@/components/tasks/TaskStatusChip.vue'
 import TaskForm from '@/components/tasks/TaskForm.vue'
@@ -69,6 +81,9 @@ const route = useRoute()
 const router = useRouter()
 const taskStore = useTaskStore()
 const categoryStore = useCategoryStore()
+const authStore = useAuthStore()
+
+const isOwner = computed(() => task.value?.ownerId === authStore.user?.id)
 
 const editing = ref(false)
 const formLoading = ref(false)
