@@ -26,6 +26,7 @@
             v-else
             :task="task"
             :categories="categories"
+            :users="users"
             :loading="formLoading"
             @submit="handleUpdate"
             @cancel="editing = false"
@@ -59,6 +60,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTaskStore } from '@/stores/tasks'
 import { useCategoryStore } from '@/stores/categories'
+import userService from '@/services/userService'
 import TaskStatusChip from '@/components/tasks/TaskStatusChip.vue'
 import TaskForm from '@/components/tasks/TaskForm.vue'
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue'
@@ -70,6 +72,7 @@ const categoryStore = useCategoryStore()
 
 const editing = ref(false)
 const formLoading = ref(false)
+const users = ref([])
 
 const loading = computed(() => taskStore.loading)
 const task = computed(() => taskStore.selectedTask)
@@ -89,8 +92,9 @@ function formatDate(date) {
   return new Date(date).toLocaleDateString('pt-BR')
 }
 
-onMounted(() => {
+onMounted(async () => {
   taskStore.fetchTask(route.params.id)
   categoryStore.fetchCategories()
+  users.value = await userService.getAll()
 })
 </script>

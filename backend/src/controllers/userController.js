@@ -10,4 +10,9 @@ async function updateProfile(request, reply) {
   return reply.send(user)
 }
 
-module.exports = { getProfile, updateProfile }
+async function getAll(request, reply) {
+  const users = await userService.getAll()
+  return reply.send(users)
+}
+
+module.exports = { getProfile, updateProfile, getAll }

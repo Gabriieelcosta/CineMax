@@ -26,4 +26,11 @@ async function update(id, data) {
   })
 }
 
-module.exports = { findByEmail, findById, create, update }
+async function findAll() {
+  return prisma.user.findMany({
+    select: { id: true, name: true, email: true },
+    orderBy: { name: 'asc' },
+  })
+}
+
+module.exports = { findByEmail, findById, findAll, create, update }

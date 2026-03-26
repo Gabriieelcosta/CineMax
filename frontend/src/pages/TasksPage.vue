@@ -34,6 +34,7 @@
     <v-dialog v-model="showForm" max-width="600">
       <TaskForm
         :categories="categories"
+        :users="users"
         :loading="formLoading"
         @submit="handleCreate"
         @cancel="showForm = false"
@@ -47,6 +48,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTaskStore } from '@/stores/tasks'
 import { useCategoryStore } from '@/stores/categories'
+import userService from '@/services/userService'
 import TaskCard from '@/components/tasks/TaskCard.vue'
 import TaskFilters from '@/components/tasks/TaskFilters.vue'
 import TaskForm from '@/components/tasks/TaskForm.vue'
@@ -62,6 +64,7 @@ const activeFilters = ref({})
 
 const loading = computed(() => taskStore.loading)
 const categories = computed(() => categoryStore.categories)
+const users = ref([])
 
 const filteredTasks = computed(() => {
   let tasks = taskStore.tasks
@@ -94,8 +97,9 @@ async function handleCreate(data) {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   taskStore.fetchTasks()
   categoryStore.fetchCategories()
+  users.value = await userService.getAll()
 })
 </script>

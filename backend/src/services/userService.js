@@ -17,4 +17,8 @@ async function updateProfile(userId, { name, password }) {
   return userRepository.update(userId, data)
 }
 
-module.exports = { getProfile, updateProfile }
+async function getAll() {
+  return userRepository.findAll()
+}
+
+module.exports = { getProfile, updateProfile, getAll }

@@ -63,6 +63,18 @@
             />
           </v-col>
 
+          <!-- Responsável -->
+          <v-col cols="12" sm="6">
+            <v-select
+              v-model="form.assigneeId"
+              :items="users"
+              item-title="name"
+              item-value="id"
+              label="Responsável"
+              clearable
+            />
+          </v-col>
+
           <!-- Data de vencimento -->
           <v-col cols="12" sm="6">
             <v-text-field
@@ -93,6 +105,7 @@ import { ref, computed, watch } from 'vue'
 const props = defineProps({
   task: { type: Object, default: null },
   categories: { type: Array, default: () => [] },
+  users: { type: Array, default: () => [] },
   loading: { type: Boolean, default: false },
 })
 
@@ -108,6 +121,7 @@ const form = ref({
   status: 'PENDING',
   priority: 'MEDIUM',
   categoryId: null,
+  assigneeId: null,
   dueDate: '',
 })
 
@@ -119,9 +133,10 @@ watch(
       form.value = {
         title: task.title || '',
         description: task.description || '',
-        status: task.status || 'TODO',
+        status: task.status || 'PENDING',
         priority: task.priority || 'MEDIUM',
         categoryId: task.categoryId || null,
+        assigneeId: task.assigneeId || null,
         dueDate: task.dueDate ? task.dueDate.split('T')[0] : '',
       }
     }

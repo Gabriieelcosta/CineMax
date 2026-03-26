@@ -1,4 +1,4 @@
-const { getProfile, updateProfile } = require('../controllers/userController')
+const { getProfile, updateProfile, getAll } = require('../controllers/userController')
 const { authenticate } = require('../middlewares/auth')
 
 async function userRoutes(fastify) {
@@ -10,6 +10,15 @@ async function userRoutes(fastify) {
       security: [{ bearerAuth: [] }],
     },
   }, getProfile)
+
+  fastify.get('/users', {
+    preHandler: authenticate,
+    schema: {
+      tags: ['Users'],
+      summary: 'Listar todos os usuários',
+      security: [{ bearerAuth: [] }],
+    },
+  }, getAll)
 
   fastify.put('/users/me', {
     preHandler: authenticate,
